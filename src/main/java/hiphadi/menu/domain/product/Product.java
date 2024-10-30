@@ -52,4 +52,12 @@ public class Product extends BaseEntity {
                 .status(status)
                 .build();
     }
+
+    public void update(String name, String description, BigDecimal price, String category, ProductStatus status) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.status = status;
+    }
 }
