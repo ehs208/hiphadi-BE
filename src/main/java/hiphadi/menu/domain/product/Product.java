@@ -4,6 +4,7 @@ import hiphadi.menu.domain.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +33,23 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
+    @Builder
+    private Product(Long id, String name, String description, BigDecimal price, String category, ProductStatus status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.status = status;
+    }
+
+    public static Product create(String name, String description, BigDecimal price, String category, ProductStatus status) {
+        return Product.builder()
+                .name(name)
+                .description(description)
+                .price(price)
+                .category(category)
+                .status(status)
+                .build();
+    }
 }

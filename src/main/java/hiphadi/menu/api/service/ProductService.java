@@ -1,7 +1,7 @@
 package hiphadi.menu.api.service;
 
-import org.springframework.stereotype.Service;
+import hiphadi.menu.api.service.request.AddProductRequestDto;
 
-@Service
 public interface ProductService {
+	void addProduct(AddProductRequestDto addProductRequestDto);
 }
