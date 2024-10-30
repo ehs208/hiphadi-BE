@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.api.service.request.AddProductRequestDto;
+import hiphadi.menu.api.service.request.CreateProductDto;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
@@ -23,8 +23,8 @@ public class ProductController {
 
     //상품 추가
     @PostMapping("/add")
-    public ApiResponse<String> addProduct(@RequestBody AddProductRequestDto addProductRequestDto) {
-        productService.addProduct(addProductRequestDto);
+    public ApiResponse<String> addProduct(@RequestBody CreateProductDto createProductDto) {
+        productService.createProduct(createProductDto);
         return ApiResponse.created();
     }
 
@@ -37,8 +37,8 @@ public class ProductController {
 
     //상품 수정
     @PutMapping("/update/{id}")
-    public ApiResponse<String> updateProduct(@PathVariable("id") Long id, @RequestBody AddProductRequestDto addProductRequestDto) {
-        productService.updateProduct(id, addProductRequestDto);
+    public ApiResponse<String> updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDto createProductDto) {
+        productService.updateProduct(id, createProductDto);
         return ApiResponse.ok();
     }
 }

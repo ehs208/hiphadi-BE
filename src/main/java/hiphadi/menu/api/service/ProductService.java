@@ -1,9 +1,9 @@
 package hiphadi.menu.api.service;
 
-import hiphadi.menu.api.service.request.AddProductRequestDto;
+import hiphadi.menu.api.service.request.CreateProductDto;
 
 public interface ProductService {
-	void addProduct(AddProductRequestDto addProductRequestDto);
+	void createProduct(CreateProductDto createProductDto);
 	void deleteProduct(Long id);
-	void updateProduct(Long id, AddProductRequestDto addProductRequestDto);
+	void updateProduct(Long id, CreateProductDto createProductDto);
 }

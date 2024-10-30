@@ -7,7 +7,7 @@ import hiphadi.menu.domain.product.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-import hiphadi.menu.api.service.request.AddProductRequestDto;
+import hiphadi.menu.api.service.request.CreateProductDto;
 
 @Transactional
 @RequiredArgsConstructor
@@ -16,9 +16,9 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductRepository productRepository;
 
 	@Override
-	public void addProduct(AddProductRequestDto addProductRequestDto) {
-		Product product = Product.create(addProductRequestDto.getName(), addProductRequestDto.getDescription(),
-				addProductRequestDto.getPrice(), addProductRequestDto.getCategory(), addProductRequestDto.getStatus());
+	public void createProduct(CreateProductDto createProductDto) {
+		Product product = Product.create(createProductDto.getName(), createProductDto.getDescription(),
+				createProductDto.getPrice(), createProductDto.getCategory(), createProductDto.getStatus());
 
 		productRepository.save(product);
 	}
@@ -31,9 +31,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void updateProduct(Long id, AddProductRequestDto addProductRequestDto) {
+	public void updateProduct(Long id, CreateProductDto createProductDto) {
 		Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 
-		product.update(addProductRequestDto.getName(), addProductRequestDto.getDescription(), addProductRequestDto.getPrice(), addProductRequestDto.getCategory(), addProductRequestDto.getStatus());
+		product.update(createProductDto.getName(), createProductDto.getDescription(), createProductDto.getPrice(), createProductDto.getCategory(), createProductDto.getStatus());
 	}
 }
