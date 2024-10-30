@@ -24,13 +24,13 @@ public class ProductController {
     @PostMapping("/add")
     public ApiResponse<String> addProduct(@RequestBody AddProductRequestDto addProductRequestDto) {
         productService.addProduct(addProductRequestDto);
-        return ApiResponse.created("상품 추가 완료");
+        return ApiResponse.created();
     }
 
     //상품 삭제
     @DeleteMapping("/delete/{id}")
     public ApiResponse<String> addProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
-        return ApiResponse.ok("상품 삭제 완료");
+        return ApiResponse.ok();
     }
 }

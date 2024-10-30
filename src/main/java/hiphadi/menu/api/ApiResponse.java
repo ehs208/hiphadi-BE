@@ -3,12 +3,16 @@ package hiphadi.menu.api;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Getter
 public class ApiResponse<T> {
 
     private int code;
     private HttpStatus status;
     private String message;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     public ApiResponse(HttpStatus status, String message, T data) {
@@ -18,12 +22,24 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public static <T> ApiResponse<T> of(HttpStatus httpStatus, String message, T data) {
-        return new ApiResponse<>(httpStatus, message, data);
+    public ApiResponse(HttpStatus status, String message) {
+        this(status, message, null);
     }
 
-    public static <T> ApiResponse<T> of(HttpStatus httpStatus, T data) {
-        return of(httpStatus, httpStatus.name(), data);
+    public static <T> ApiResponse<T> of(HttpStatus status, String message, T data) {
+        return new ApiResponse<>(status, message, data);
+    }
+
+    public static <T> ApiResponse<T> of(HttpStatus status, String message) {
+        return new ApiResponse<>(status, message);
+    }
+
+    public static <T> ApiResponse<T> of(HttpStatus status, T data) {
+        return of(status, status.name(), data);
+    }
+
+    public static <T> ApiResponse<T> of(HttpStatus status) {
+        return of(status, status.name());
     }
 
     public static <T> ApiResponse<T> ok(T data) {
@@ -34,5 +50,11 @@ public class ApiResponse<T> {
         return of(HttpStatus.CREATED, data);
     }
 
+    public static <T> ApiResponse<T> ok() {
+        return of(HttpStatus.OK);
+    }
 
+    public static <T> ApiResponse<T> created() {
+        return of(HttpStatus.CREATED);
+    }
 }
