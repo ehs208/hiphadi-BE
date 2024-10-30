@@ -15,8 +15,7 @@ public class ApiControllerAdvice {
     protected ApiResponse<Object> bindException(BindException e) {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
-            e.getBindingResult().getAllErrors().getFirst().getDefaultMessage(),
-            null
+            e.getBindingResult().getAllErrors().getFirst().getDefaultMessage()
         );
     }
 
@@ -25,8 +24,7 @@ public class ApiControllerAdvice {
     protected ApiResponse<Object> illegalAccessException(IllegalAccessException e) {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            null
+            e.getMessage()
         );
     }
 }

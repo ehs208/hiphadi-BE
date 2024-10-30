@@ -25,12 +25,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void deleteProduct(Long id) {
+		productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+
 		productRepository.deleteById(id);
 	}
 
 	@Override
 	public void updateProduct(Long id, AddProductRequestDto addProductRequestDto) {
 		Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+
 		product.update(addProductRequestDto.getName(), addProductRequestDto.getDescription(), addProductRequestDto.getPrice(), addProductRequestDto.getCategory(), addProductRequestDto.getStatus());
 	}
 }
