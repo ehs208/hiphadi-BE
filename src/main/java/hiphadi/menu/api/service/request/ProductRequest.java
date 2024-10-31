@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class CreateProductDto {
+public class ProductRequest {
 	private String name;
 	private String description;
 	private BigDecimal price;

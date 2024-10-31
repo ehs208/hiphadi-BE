@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class ProductListDto {
+public class ProductResponse {
 	private Long id;
 	private String name;
 	private String description;
@@ -17,7 +17,7 @@ public class ProductListDto {
 	private String category;
 	private ProductStatus status;
 
-	public ProductListDto(Long id, String name, String description, BigDecimal price, String category, ProductStatus status) {
+	public ProductResponse(Long id, String name, String description, BigDecimal price, String category, ProductStatus status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -26,7 +26,7 @@ public class ProductListDto {
 		this.status = status;
 	}
 
-	public ProductListDto(Product product) {
+	public ProductResponse(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
 		this.description = product.getDescription();

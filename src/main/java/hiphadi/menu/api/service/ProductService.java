@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import hiphadi.menu.api.service.request.CreateProductDto;
-import hiphadi.menu.api.service.response.ProductListDto;
+import hiphadi.menu.api.service.request.ProductRequest;
+import hiphadi.menu.api.service.response.ProductResponse;
 
 public interface ProductService {
-	void createProduct(CreateProductDto createProductDto);
+	void createProduct(ProductRequest productRequest);
 
 	void deleteProduct(Long id);
 
-	void updateProduct(Long id, CreateProductDto createProductDto);
+	void updateProduct(Long id, ProductRequest productRequest);
 
-	List<ProductListDto> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable);
+	List<ProductResponse> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable);
 }
 

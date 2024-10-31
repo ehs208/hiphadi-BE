@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import hiphadi.menu.api.service.response.ProductListDto;
+import hiphadi.menu.api.service.response.ProductResponse;
 import hiphadi.menu.domain.product.Product;
 import hiphadi.menu.domain.product.ProductRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
-import hiphadi.menu.api.service.request.CreateProductDto;
+import hiphadi.menu.api.service.request.ProductRequest;
 
 @Transactional
 @RequiredArgsConstructor
@@ -21,9 +21,9 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductRepository productRepository;
 
 	@Override
-	public void createProduct(CreateProductDto createProductDto) {
-		Product product = Product.create(createProductDto.getName(), createProductDto.getDescription(),
-				createProductDto.getPrice(), createProductDto.getCategory(), createProductDto.getStatus());
+	public void createProduct(ProductRequest productRequest) {
+		Product product = Product.create(productRequest.getName(), productRequest.getDescription(),
+				productRequest.getPrice(), productRequest.getCategory(), productRequest.getStatus());
 
 		productRepository.save(product);
 	}
@@ -36,18 +36,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void updateProduct(Long id, CreateProductDto createProductDto) {
+	public void updateProduct(Long id, ProductRequest productRequest) {
 		Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 
-		product.update(createProductDto.getName(), createProductDto.getDescription(), createProductDto.getPrice(), createProductDto.getCategory(), createProductDto.getStatus());
+		product.update(productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(), productRequest.getCategory(), productRequest.getStatus());
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<ProductListDto> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable) {
+	public List<ProductResponse> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable) {
 		return getProducts(categoryCursor, idCursor, pageable)
 			.stream()
-			.map(ProductListDto::new)
+			.map(ProductResponse::new)
 			.collect(Collectors.toList());
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import hiphadi.menu.api.ApiResponse;
 import hiphadi.menu.api.service.ProductServiceImpl;
-import hiphadi.menu.api.service.response.ProductListDto;
+import hiphadi.menu.api.service.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.api.service.request.CreateProductDto;
+import hiphadi.menu.api.service.request.ProductRequest;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
@@ -31,8 +31,8 @@ public class ProductController {
 
     //상품 추가
     @PostMapping("/add")
-    public ApiResponse<Void> addProduct(@RequestBody CreateProductDto createProductDto) {
-        productService.createProduct(createProductDto);
+    public ApiResponse<Void> addProduct(@RequestBody ProductRequest productRequest) {
+        productService.createProduct(productRequest);
         return ApiResponse.created();
     }
 
@@ -45,17 +45,17 @@ public class ProductController {
 
     //상품 수정
     @PutMapping("/update/{id}")
-    public ApiResponse<Void> updateProduct(@PathVariable Long id, @RequestBody CreateProductDto createProductDto) {
-        productService.updateProduct(id, createProductDto);
+    public ApiResponse<Void> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
+        productService.updateProduct(id, productRequest);
         return ApiResponse.ok();
     }
 
     // 상품 목록 조회
     @GetMapping("/list")
-    public ApiResponse<List<ProductListDto>> getProductList(
+    public ApiResponse<List<ProductResponse>> getProductList(
         @RequestParam(required = false) String categoryCursor,
         @RequestParam(required = false) Long idCursor) {
-        List<ProductListDto> productListResponse = productService.findProductsByPage(categoryCursor, idCursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
+        List<ProductResponse> productListResponse = productService.findProductsByPage(categoryCursor, idCursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
         return ApiResponse.ok(productListResponse);
     }
 }
