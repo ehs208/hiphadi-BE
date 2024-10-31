@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<ProductListDto> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable) {
-		return getProductList(categoryCursor, idCursor, pageable)
+		return getProducts(categoryCursor, idCursor, pageable)
 			.stream()
 			.map(ProductListDto::new)
 			.collect(Collectors.toList());
