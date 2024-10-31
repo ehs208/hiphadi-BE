@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 
 import hiphadi.menu.domain.product.ProductStatus;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
 public class ProductRequest {
 	private String name;
