@@ -3,14 +3,13 @@ package hiphadi.menu.api.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hiphadi.menu.api.service.response.ProductListDto;
 import hiphadi.menu.domain.product.Product;
 import hiphadi.menu.domain.product.ProductRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import hiphadi.menu.api.service.request.CreateProductDto;
@@ -43,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
 		product.update(createProductDto.getName(), createProductDto.getDescription(), createProductDto.getPrice(), createProductDto.getCategory(), createProductDto.getStatus());
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<ProductListDto> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable) {
 		return getProducts(categoryCursor, idCursor, pageable)
@@ -50,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
 			.map(ProductListDto::new)
 			.collect(Collectors.toList());
 	}
+
 
 	private List<Product> getProducts(String categoryCursor, Long idCursor, Pageable pageable) {
 		if (categoryCursor == null && idCursor == null) {
