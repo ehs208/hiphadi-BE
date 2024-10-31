@@ -36,13 +36,13 @@ public class ProductController {
     }
 
     //상품 삭제
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("{id}")
     public ApiResponse<Void> addProduct(@PathVariable Long id) {
         return ApiResponse.ok(productService.deleteProduct(id));
     }
 
     //상품 수정
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ApiResponse<Void> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
         return ApiResponse.ok(productService.updateProduct(id, productRequest));
     }
