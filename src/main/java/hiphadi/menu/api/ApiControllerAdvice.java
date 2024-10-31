@@ -21,7 +21,7 @@ public class ApiControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalAccessException.class)
-    protected ApiResponse<Object> illegalAccessException(IllegalAccessException e) {
+    protected ApiResponse<Object> illegalArgumentException(IllegalArgumentException e) {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
             e.getMessage()
