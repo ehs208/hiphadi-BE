@@ -26,6 +26,7 @@ import hiphadi.menu.api.service.request.CreateProductDto;
 public class ProductController {
 
     private static final int PAGE_DEFAULT_SIZE = 3;
+
     private final ProductServiceImpl productService;
 
     //상품 추가
@@ -36,15 +37,15 @@ public class ProductController {
     }
 
     //상품 삭제
-    @DeleteMapping("/delete/{id}")
-    public ApiResponse<Void> addProduct(@PathVariable("id") Long id) {
+    @DeleteMapping("/remove/{id}")
+    public ApiResponse<Void> addProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ApiResponse.ok();
     }
 
     //상품 수정
     @PutMapping("/update/{id}")
-    public ApiResponse<Void> updateProduct(@PathVariable("id") Long id, @RequestBody CreateProductDto createProductDto) {
+    public ApiResponse<Void> updateProduct(@PathVariable Long id, @RequestBody CreateProductDto createProductDto) {
         productService.updateProduct(id, createProductDto);
         return ApiResponse.ok();
     }
