@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 			.collect(Collectors.toList());
 	}
 
-	private List<Product> getProductList(String categoryCursor, Long idCursor, Pageable pageable) {
+	private List<Product> getProducts(String categoryCursor, Long idCursor, Pageable pageable) {
 		if (categoryCursor == null && idCursor == null) {
 			// 커서가 없을 때는 모든 제품을 카테고리와 ID로 정렬하여 반환
 			return productRepository.findAllByOrderByCategoryDescIdDesc(pageable);
