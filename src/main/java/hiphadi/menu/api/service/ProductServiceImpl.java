@@ -52,13 +52,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
-	private List<Product> getProducts(String categoryCursor, Long idCursor, Pageable pageable) {
-		if (categoryCursor == null && idCursor == null) {
-			// 커서가 없을 때는 모든 제품을 카테고리와 ID로 정렬하여 반환
-			return productRepository.findAllByOrderByCategoryDescIdDesc(pageable);
-		} else {
-			// 커서가 있을 때는 categoryCursor와 idCursor를 사용하여 필터링
-			return productRepository.findByCursor(categoryCursor, idCursor, pageable);
-		}
+private List<Product> getProducts(String categoryCursor, Long idCursor, Pageable pageable) {
+	if (categoryCursor == null && idCursor == null) {
+		// 커서가 없을 때는 모든 제품을 카테고리와 ID로 정렬하여 반환
+		return productRepository.findAllByOrderByCategoryDescIdDesc(pageable);
 	}
+	// 커서가 있을 때는 categoryCursor와 idCursor를 사용하여 필터링
+	return productRepository.findByCursor(categoryCursor, idCursor, pageable);
+}
 }
