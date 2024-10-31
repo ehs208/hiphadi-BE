@@ -32,22 +32,19 @@ public class ProductController {
     //상품 추가
     @PostMapping("/add")
     public ApiResponse<Void> addProduct(@RequestBody ProductRequest productRequest) {
-        productService.createProduct(productRequest);
-        return ApiResponse.created();
+        return ApiResponse.created(productService.createProduct(productRequest));
     }
 
     //상품 삭제
     @DeleteMapping("/remove/{id}")
     public ApiResponse<Void> addProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ApiResponse.ok();
+        return ApiResponse.ok(productService.deleteProduct(id));
     }
 
     //상품 수정
     @PutMapping("/update/{id}")
     public ApiResponse<Void> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
-        productService.updateProduct(id, productRequest);
-        return ApiResponse.ok();
+        return ApiResponse.ok(productService.updateProduct(id, productRequest));
     }
 
     // 상품 목록 조회

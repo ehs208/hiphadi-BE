@@ -22,24 +22,16 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public ApiResponse(HttpStatus status, String message) {
-        this(status, message, null);
-    }
-
     public static <T> ApiResponse<T> of(HttpStatus status, String message, T data) {
         return new ApiResponse<>(status, message, data);
     }
 
     public static <T> ApiResponse<T> of(HttpStatus status, String message) {
-        return new ApiResponse<>(status, message);
+        return new ApiResponse<>(status, message, null);
     }
 
     public static <T> ApiResponse<T> of(HttpStatus status, T data) {
         return of(status, status.name(), data);
-    }
-
-    public static <T> ApiResponse<T> of(HttpStatus status) {
-        return of(status, status.name());
     }
 
     public static <T> ApiResponse<T> ok(T data) {
@@ -50,11 +42,4 @@ public class ApiResponse<T> {
         return of(HttpStatus.CREATED, data);
     }
 
-    public static <T> ApiResponse<T> ok() {
-        return of(HttpStatus.OK);
-    }
-
-    public static <T> ApiResponse<T> created() {
-        return of(HttpStatus.CREATED);
-    }
 }
