@@ -51,8 +51,10 @@ public class ProductController {
 
     // 상품 목록 조회
     @GetMapping("/list")
-    public ApiResponse<List<ProductListDto>> getProductList(@RequestParam(required = false) Long cursor) {
-        List<ProductListDto> productListResponse = productService.findProductsByPage(cursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
+    public ApiResponse<List<ProductListDto>> getProductList(
+        @RequestParam(required = false) String categoryCursor,
+        @RequestParam(required = false) Long idCursor) {
+        List<ProductListDto> productListResponse = productService.findProductsByPage(categoryCursor, idCursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
         return ApiResponse.ok(productListResponse);
     }
 }

@@ -10,13 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ProductListDto {
+	private Long id;
 	private String name;
 	private String description;
 	private BigDecimal price;
 	private String category;
 	private ProductStatus status;
 
-	public ProductListDto(String name, String description, BigDecimal price, String category, ProductStatus status) {
+	public ProductListDto(Long id, String name, String description, BigDecimal price, String category, ProductStatus status) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -25,6 +27,7 @@ public class ProductListDto {
 	}
 
 	public ProductListDto(Product product) {
+		this.id = product.getId();
 		this.name = product.getName();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
