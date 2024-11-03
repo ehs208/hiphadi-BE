@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	List<Product> findAllByOrderByCategoryDescIdDesc(Pageable pageable);
+	List<Product> findAllByOrderByCategoryDescIdDesc(Pageable pageable); //미사용
 
 	@Query("""
 		SELECT p FROM Product p
@@ -20,7 +20,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 		    p.category DESC, 
 		    p.id DESC
 		""")
-	List<Product> findByCursor(String categoryCursor,
+	List<Product> findByCursor(String categoryCursor, //미사용
 		Long idCursor,
 		Pageable pageable);
+
+	List<Product> findAll();
 }
+

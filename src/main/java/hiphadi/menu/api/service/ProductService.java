@@ -14,6 +14,9 @@ public interface ProductService {
 
 	Void updateProduct(Long id, ProductRequest productRequest);
 
+	//미사용 서비스
 	List<ProductResponse> findProductsByPage(String categoryCursor, Long idCursor, Pageable pageable);
+
+	List<ProductResponse> getAllProducts();
 }
 

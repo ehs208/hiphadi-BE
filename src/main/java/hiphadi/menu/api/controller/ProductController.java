@@ -47,12 +47,18 @@ public class ProductController {
         return ApiResponse.ok(productService.updateProduct(id, productRequest));
     }
 
-    // 상품 목록 조회
+    // // 상품 목록 조회 Legacy
+    // @GetMapping("/list")
+    // // public ApiResponse<List<ProductResponse>> getProductList(
+    // //     @RequestParam(required = false) String categoryCursor,
+    // //     @RequestParam(required = false) Long idCursor) {
+    // //     List<ProductResponse> productListResponse = productService.findProductsByPage(categoryCursor, idCursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
+    // //     return ApiResponse.ok(productListResponse);
+    // // }
+
     @GetMapping("/list")
-    public ApiResponse<List<ProductResponse>> getProductList(
-        @RequestParam(required = false) String categoryCursor,
-        @RequestParam(required = false) Long idCursor) {
-        List<ProductResponse> productListResponse = productService.findProductsByPage(categoryCursor, idCursor, PageRequest.of(0, PAGE_DEFAULT_SIZE));
+    public ApiResponse<List<ProductResponse>> getProductList() {
+        List<ProductResponse> productListResponse = productService.getAllProducts();
         return ApiResponse.ok(productListResponse);
     }
 }
