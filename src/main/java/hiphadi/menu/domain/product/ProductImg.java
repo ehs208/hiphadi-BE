@@ -15,8 +15,7 @@ public class ProductImg extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "product_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "ProductImg", fetch = FetchType.LAZY)
     private Product product;
 
     private String url;

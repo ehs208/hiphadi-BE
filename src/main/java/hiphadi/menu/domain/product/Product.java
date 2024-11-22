@@ -6,9 +6,13 @@ import hiphadi.menu.domain.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,8 +36,9 @@ public class Product extends BaseEntity {
 	@NotNull
 	private BigDecimal price;
 
-	@NotNull
-	private String category;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
 
 	@Enumerated(EnumType.STRING)
 	private ProductStatus status;
@@ -41,8 +46,12 @@ public class Product extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private RecommendStatus isRecommend;
 
+	@OneToOne
+	@JoinColumn(name = "product_img_id")
+	private ProductImg productImage;
+
 	@Builder
-	private Product(Long id, String name, String description, BigDecimal price, String category, ProductStatus status,
+	private Product(Long id, String name, String description, BigDecimal price, Category category, ProductStatus status,
 		RecommendStatus isRecommend) {
 		this.id = id;
 		this.name = name;
@@ -53,7 +62,7 @@ public class Product extends BaseEntity {
 		this.isRecommend = isRecommend;
 	}
 
-	public static Product create(String name, String description, BigDecimal price, String category,
+	public static Product create(String name, String description, BigDecimal price, Category category,
 		ProductStatus status, RecommendStatus isRecommend) {
 		return Product.builder()
 			.name(name)
@@ -65,7 +74,7 @@ public class Product extends BaseEntity {
 			.build();
 	}
 
-	public void update(String name, String description, BigDecimal price, String category, ProductStatus status) {
+	public void update(String name, String description, BigDecimal price, Category category, ProductStatus status) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
