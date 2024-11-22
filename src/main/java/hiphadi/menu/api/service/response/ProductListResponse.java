@@ -28,9 +28,7 @@ public class ProductListResponse {
 		this.category = product.getCategory().getCategoryName();
 		this.status = product.getStatus();
 		this.isRecommend = product.getIsRecommend();
-		this.imgPath = product.getProductImage().stream()
-			.map(ProductImg::getUrl)
-			.collect(Collectors.toList());
+
 	}
 }
 
