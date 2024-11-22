@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Void createProduct(ProductRequest productRequest) {
 		Product product = Product.create(productRequest.getName(), productRequest.getDescription(),
-			productRequest.getPrice(), productRequest.getCategory(), productRequest.getStatus());
+			productRequest.getPrice(), productRequest.getCategory(), productRequest.getStatus(), productRequest.getIsRecommend());
 
 		productRepository.save(product);
 

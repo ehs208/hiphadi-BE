@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import hiphadi.menu.domain.product.Product;
 import hiphadi.menu.domain.product.ProductStatus;
+import hiphadi.menu.domain.product.RecommendStatus;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +15,7 @@ public class ProductResponse {
 	private BigDecimal price;
 	private String category;
 	private ProductStatus status;
+	private RecommendStatus isRecommend;
 
 	public ProductResponse(Product product) {
 		this.id = product.getId();
@@ -22,6 +24,7 @@ public class ProductResponse {
 		this.price = product.getPrice();
 		this.category = product.getCategory();
 		this.status = product.getStatus();
+		this.isRecommend = product.getIsRecommend();
 	}
 }
 
