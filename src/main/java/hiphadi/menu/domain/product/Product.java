@@ -1,6 +1,7 @@
 package hiphadi.menu.domain.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import hiphadi.menu.domain.BaseEntity;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -46,9 +48,9 @@ public class Product extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private RecommendStatus isRecommend;
 
-	@OneToOne
+	@OneToMany
 	@JoinColumn(name = "product_img_id")
-	private ProductImg productImage;
+	private List<ProductImg> productImage;
 
 	@Builder
 	private Product(Long id, String name, String description, BigDecimal price, Category category, ProductStatus status,
@@ -60,25 +62,5 @@ public class Product extends BaseEntity {
 		this.category = category;
 		this.status = status;
 		this.isRecommend = isRecommend;
-	}
-
-	public static Product create(String name, String description, BigDecimal price, Category category,
-		ProductStatus status, RecommendStatus isRecommend) {
-		return Product.builder()
-			.name(name)
-			.description(description)
-			.price(price)
-			.category(category)
-			.status(status)
-			.isRecommend(isRecommend)
-			.build();
-	}
-
-	public void update(String name, String description, BigDecimal price, Category category, ProductStatus status) {
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.category = category;
-		this.status = status;
 	}
 }

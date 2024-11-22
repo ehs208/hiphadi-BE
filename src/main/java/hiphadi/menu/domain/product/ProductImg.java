@@ -15,8 +15,6 @@ public class ProductImg extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "ProductImg", fetch = FetchType.LAZY)
-    private Product product;
 
     private String url;
 

@@ -2,13 +2,12 @@ package hiphadi.menu.api.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
-
-import hiphadi.menu.api.service.request.ProductRequest;
-import hiphadi.menu.api.service.response.ProductResponse;
+import hiphadi.menu.api.service.response.ProductDetailResponse;
+import hiphadi.menu.api.service.response.ProductListResponse;
 
 public interface ProductService {
 
-	List<ProductResponse> getAllProducts();
+	List<ProductListResponse> getAllProducts();
+	ProductDetailResponse getProductDetail(Long id);
 }
 

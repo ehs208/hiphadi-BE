@@ -1,15 +1,17 @@
 package hiphadi.menu.api.service.response;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import hiphadi.menu.domain.product.Category;
+import hiphadi.menu.domain.product.ProductImg;
 import hiphadi.menu.domain.product.Product;
 import hiphadi.menu.domain.product.ProductStatus;
 import hiphadi.menu.domain.product.RecommendStatus;
 import lombok.Getter;
 
 @Getter
-public class ProductResponse {
+public class ProductListResponse {
 	private Long id;
 	private String name;
 	private String description;
@@ -17,17 +19,18 @@ public class ProductResponse {
 	private String category;
 	private ProductStatus status;
 	private RecommendStatus isRecommend;
-	private String imgPath;
+	private List<String> imgPath;
 
-	public ProductResponse(Product product) {
+	public ProductListResponse(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
-		this.description = product.getDescription();
 		this.price = product.getPrice();
 		this.category = product.getCategory().getCategoryName();
 		this.status = product.getStatus();
 		this.isRecommend = product.getIsRecommend();
-		this.imgPath = product.getProductImage().getUrl();
+		this.imgPath = product.getProductImage().stream()
+			.map(ProductImg::getUrl)
+			.collect(Collectors.toList());
 	}
 }
 
