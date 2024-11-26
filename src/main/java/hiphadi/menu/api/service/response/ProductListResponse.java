@@ -14,12 +14,10 @@ import lombok.Getter;
 public class ProductListResponse {
 	private Long id;
 	private String name;
-	private String description;
 	private BigDecimal price;
 	private String category;
 	private ProductStatus status;
 	private RecommendStatus isRecommend;
-	private List<String> imgPath;
 
 	public ProductListResponse(Product product) {
 		this.id = product.getId();
