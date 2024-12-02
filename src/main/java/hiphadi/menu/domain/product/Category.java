@@ -20,4 +20,7 @@ public class Category {
 
 	@NotNull
 	private String categoryName;
+
+	@NotNull
+	private Long priority;
 }
