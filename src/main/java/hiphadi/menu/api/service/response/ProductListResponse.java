@@ -18,11 +18,13 @@ public class ProductListResponse {
 	private String category;
 	private ProductStatus status;
 	private RecommendStatus isRecommend;
+	private String description;
 
 	public ProductListResponse(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
 		this.price = product.getPrice();
+		this.description = product.getDescription();
 		this.category = product.getCategory().getCategoryName();
 		this.status = product.getStatus();
 		this.isRecommend = product.getIsRecommend();
