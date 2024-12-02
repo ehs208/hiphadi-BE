@@ -33,6 +33,8 @@ public class Product extends BaseEntity {
 	@NotNull
 	private String name;
 
+	private String engName;
+
 	private String description;
 
 	@NotNull

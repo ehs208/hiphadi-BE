@@ -14,6 +14,7 @@ import lombok.Getter;
 public class ProductListResponse {
 	private Long id;
 	private String name;
+	private String engName;
 	private BigDecimal price;
 	private String category;
 	private ProductStatus status;
@@ -23,6 +24,7 @@ public class ProductListResponse {
 	public ProductListResponse(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
+		this.engName= product.getEngName();
 		this.price = product.getPrice();
 		this.description = product.getDescription();
 		this.category = product.getCategory().getCategoryName();
