@@ -51,7 +51,7 @@ public class Product extends BaseEntity {
 	private RecommendStatus isRecommend;
 
 	@OneToMany
-	@JoinColumn(name = "product_img_id")
+	@JoinColumn(name = "product_id")
 	private List<ProductImg> productImage;
 
 	@Builder
