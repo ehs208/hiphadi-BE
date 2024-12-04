@@ -21,6 +21,8 @@ public class Category {
 	@NotNull
 	private String categoryName;
 
+	private String categoryEngName;
+
 	@NotNull
 	private Long priority;
 }

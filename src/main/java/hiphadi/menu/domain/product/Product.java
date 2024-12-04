@@ -37,7 +37,6 @@ public class Product extends BaseEntity {
 
 	private String description;
 
-	@NotNull
 	private BigDecimal price;
 
 	@ManyToOne(fetch = FetchType.LAZY)
