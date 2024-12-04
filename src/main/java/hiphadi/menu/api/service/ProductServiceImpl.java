@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<ProductListResponse> getAllProducts() {
-		return productRepository.findAllByOrderByCategoryAsc()
+		return productRepository.findAllByOrderByCategory_priorityAsc()
 			.stream()
 			.map(ProductListResponse::new)
 			.collect(Collectors.toList());

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	List<Product> findAllByOrderByCategoryAsc();
+	List<Product> findAllByOrderByCategory_priorityAsc();
 }
 
