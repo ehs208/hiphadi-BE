@@ -68,7 +68,7 @@ jobs:
               --name ${{ env.APP_NAME }} \
               -p ${{ env.APP_NAME == 'app-prod' && '8080:8080' || '8081:8081' }} \
               -v /home/ec2-user/app/application.yaml:/app/application.yaml \
-              ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:${{ github.sha }}
+              ${{ secrets.DOCKERHUB_USERNAME }}/hiphadi:${{ github.sha }}
             
             # 미사용 이미지 정리
             docker image prune -af
