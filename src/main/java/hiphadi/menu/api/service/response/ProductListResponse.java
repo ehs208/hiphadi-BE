@@ -17,6 +17,7 @@ public class ProductListResponse {
 	private String engName;
 	private BigDecimal price;
 	private String category;
+	private String categoryEngName;
 	private ProductStatus status;
 	private RecommendStatus isRecommend;
 	private String description;
@@ -28,6 +29,7 @@ public class ProductListResponse {
 		this.price = product.getPrice();
 		this.description = product.getDescription();
 		this.category = product.getCategory().getCategoryName();
+		this.categoryEngName = product.getCategory().getCategoryEngName();
 		this.status = product.getStatus();
 		this.isRecommend = product.getIsRecommend();
 
