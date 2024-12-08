@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-			.allowedOriginPatterns("http://localhost:3000") // “*“같은 와일드카드를 사용
+			.allowedOriginPatterns("http://localhost:3000", "https://hiphadi.store") // “*“같은 와일드카드를 사용
 			.allowedMethods("GET") // 허용할 HTTP method
 			.allowCredentials(true); // 쿠키 인증 요청 허용
 	}
