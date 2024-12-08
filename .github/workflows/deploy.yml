@@ -51,7 +51,7 @@ jobs:
           script: |
             cd /home/ec2-user/app
             
-            echo '${{ secrets.APPLICATION }}' > application.yml
+            echo '${{ secrets.APPLICATION }}' > application.yaml
             
             # Docker Hub 로그인
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
