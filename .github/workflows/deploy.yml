@@ -2,7 +2,7 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ main, develop ]  # main과 develop 브랜치 푸시 시 실행
+    branches: [ main, develop ]
 
 jobs:
   deploy:
@@ -28,6 +28,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # application.yaml 생성
+      - name: Make application.yaml
+        run: |
+          mkdir -p ./src/main/resources
+          echo '${{ secrets.APPLICATION }}' > ./src/main/resources/application.yaml
+
       - name: Build with Gradle
         run: ./gradlew build -x test
 
@@ -51,8 +57,6 @@ jobs:
           script: |
             cd /home/ec2-user/app
             
-            echo '${{ secrets.APPLICATION }}' > application.yaml
-            
             # Docker Hub 로그인
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
             
@@ -67,7 +71,6 @@ jobs:
             docker run -d \
               --name ${{ env.APP_NAME }} \
               -p ${{ env.APP_NAME == 'app-prod' && '8080:8080' || '8081:8081' }} \
-              -v /home/ec2-user/app/application.yaml:/app/application.yaml \
               ${{ secrets.DOCKERHUB_USERNAME }}/hiphadi:${{ github.sha }}
             
             # 미사용 이미지 정리
