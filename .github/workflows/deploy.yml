@@ -70,7 +70,7 @@ jobs:
             # 새 컨테이너 실행
             docker run -d \
               --name ${{ env.APP_NAME }} \
-              -p ${{ env.APP_NAME == 'app-prod' && '8080:8080' || '8081:8081' }} \
+              -p ${{ env.APP_NAME == 'app-prod' && '8080:8080' || '8081:8080' }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/hiphadi:${{ github.sha }}
             
             # 미사용 이미지 정리
