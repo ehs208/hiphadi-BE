@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.google.zxing.WriterException;
 import hiphadi.menu.api.ApiResponse;
 import hiphadi.menu.api.service.QrCodeService;
 import hiphadi.menu.api.service.request.CreateQrCodeRequest;
+import hiphadi.menu.config.ApiKeyConfig;
 import hiphadi.menu.domain.qrcode.QrCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +28,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class QrCodeController {
 	private final QrCodeService qrCodeService;
+	private final ApiKeyConfig apiKeyConfig;
 
 	@PostMapping("")
-	public ApiResponse<String> createQrCode(@RequestBody CreateQrCodeRequest request) throws
+	public ApiResponse<String> createQrCode(@RequestBody CreateQrCodeRequest request,  @RequestHeader("X-API-KEY") String apiKey) throws
 		IOException,
 		WriterException {
+		if (!apiKeyConfig.isValidApiKey(apiKey)) {
+			throw new RuntimeException("Invalid API Key");
+		}
+
 		String trackingId = qrCodeService.createQrCode(request);
 		return ApiResponse.ok(trackingId);
 	}
