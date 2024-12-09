@@ -1,6 +1,7 @@
 package hiphadi.menu.api.service;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -26,24 +27,31 @@ public class QrCodeService {
 	private final QrCodeRepository qrCodeRepository;
 
 	public String createQrCode(CreateQrCodeRequest request) throws IOException, WriterException {
-		// 트래킹 ID 생성
-		String trackingId = UUID.randomUUID().toString();
+			// 트래킹 ID 생성
+			String trackingId = UUID.randomUUID().toString();
 
-		// QR 코드 엔티티 생성
+			// QR 코드 엔티티 생성
+			QrCode qrcode = QrCode.createQrCode(trackingId, request.getTargetUrl());
+			qrCodeRepository.save(qrcode);
 
-		QrCode qrcode = QrCode.createQrCode(trackingId, request.getTargetUrl());
-		qrCodeRepository.save(qrcode);
+			// QR 코드 이미지 생성
+			String redirectUrl = "https://hiphadi.store/redirect/" + trackingId;
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			BitMatrix bitMatrix = qrCodeWriter.encode(redirectUrl, BarcodeFormat.QR_CODE, 500, 500);
 
-		// QR 코드 이미지 생성
-		String redirectUrl = "http://localhost:8080/api/qrcode/redirect/" + trackingId;
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(redirectUrl, BarcodeFormat.QR_CODE, 500, 500);
+			// 이미지 저장 경로 설정
+			Path directoryPath = Paths.get("qrcodes");
+			Path filePath = directoryPath.resolve(trackingId + ".png");
 
-		// 이미지 저장
-		Path path = Paths.get("qrcodes/" + trackingId + ".png");
-		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+			// 디렉토리 생성
+			if (!Files.exists(directoryPath)) {
+				Files.createDirectories(directoryPath);
+			}
 
-		return trackingId;
+			// 이미지 저장
+			MatrixToImageWriter.writeToPath(bitMatrix, "PNG", filePath);
+
+			return trackingId;
 	}
 
 	public void recordVisit(String trackingId, String ipAddress, String userAgent) {
