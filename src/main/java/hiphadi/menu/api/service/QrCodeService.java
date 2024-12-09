@@ -35,7 +35,7 @@ public class QrCodeService {
 			qrCodeRepository.save(qrcode);
 
 			// QR 코드 이미지 생성
-			String redirectUrl = "https://hiphadi.store/redirect/" + trackingId;
+			String redirectUrl = "https://localhost/api/qrcode/redirect/" + trackingId;
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
 			BitMatrix bitMatrix = qrCodeWriter.encode(redirectUrl, BarcodeFormat.QR_CODE, 500, 500);
 
