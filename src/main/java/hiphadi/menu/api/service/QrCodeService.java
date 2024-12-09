@@ -1,0 +1,73 @@
+package hiphadi.menu.api.service;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import hiphadi.menu.api.service.request.CreateQrCodeRequest;
+import hiphadi.menu.domain.qrcode.QrCode;
+import hiphadi.menu.domain.qrcode.QrCodeRepository;
+import hiphadi.menu.domain.qrcode.VisitLog;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class QrCodeService {
+	private final QrCodeRepository qrCodeRepository;
+
+	public String createQrCode(CreateQrCodeRequest request) throws IOException, WriterException {
+		// 트래킹 ID 생성
+		String trackingId = UUID.randomUUID().toString();
+
+		// QR 코드 엔티티 생성
+
+		QrCode qrcode = QrCode.createQrCode(trackingId, request.getTargetUrl());
+		qrCodeRepository.save(qrcode);
+
+		// QR 코드 이미지 생성
+		String redirectUrl = "http://localhost:8080/api/qrcode/redirect/" + trackingId;
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = qrCodeWriter.encode(redirectUrl, BarcodeFormat.QR_CODE, 500, 500);
+
+		// 이미지 저장
+		Path path = Paths.get("qrcodes/" + trackingId + ".png");
+		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+		return trackingId;
+	}
+
+	public void recordVisit(String trackingId, String ipAddress, String userAgent) {
+		QrCode qrCode = qrCodeRepository.findByTrackingId(trackingId);
+
+		VisitLog visitLog = VisitLog.createVisitLog(qrCode, ipAddress, userAgent);
+		qrCode.getVisitLogs().add(visitLog);
+		qrCode.addVisits();
+		qrCodeRepository.save(qrCode);
+	}
+
+	// public QrCodeStats getStats(String trackingId) {
+	// 	QrCode qrCode = qrCodeRepository.findByTrackingId(trackingId);
+	//
+	// 	return QrCodeStats.builder()
+	// 		.totalVisits(qrCode.getVisits())
+	// 		.createdAt(qrCode.getCreatedAt())
+	// 		.targetUrl(qrCode.getTargetUrl())
+	// 		.hourlyStats(calculateHourlyStats(qrCode.getVisitLogs()))
+	// 		.build();
+	// }
+
+	public QrCode getQrCode(String trackingId) {
+		return qrCodeRepository.findByTrackingId(trackingId);
+	}
+}
+

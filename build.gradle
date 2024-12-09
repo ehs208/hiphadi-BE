@@ -45,6 +45,10 @@ dependencies {
     //MariaDB
     implementation 'org.mariadb.jdbc:mariadb-java-client'
 
+    //QR Code
+    implementation 'com.google.zxing:core:3.5.3'
+    implementation 'com.google.zxing:javase:3.5.1'
+
 }
 
 tasks.named('test') {
