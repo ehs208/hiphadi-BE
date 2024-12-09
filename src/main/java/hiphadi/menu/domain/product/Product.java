@@ -30,6 +30,8 @@ public class Product extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private Long customOrder;
+
 	@NotNull
 	private String name;
 
@@ -53,15 +55,4 @@ public class Product extends BaseEntity {
 	@JoinColumn(name = "product_id")
 	private List<ProductImg> productImage;
 
-	@Builder
-	private Product(Long id, String name, String description, BigDecimal price, Category category, ProductStatus status,
-		RecommendStatus isRecommend) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.category = category;
-		this.status = status;
-		this.isRecommend = isRecommend;
-	}
 }
