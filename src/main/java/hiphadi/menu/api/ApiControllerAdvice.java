@@ -1,25 +1,24 @@
 package hiphadi.menu.api;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindException;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RestControllerAdvice
 public class ApiControllerAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BindException.class)
-    protected ApiResponse<Object> bindException(BindException e) {
+    @ExceptionHandler(Exception.class)
+    public ApiResponse<Object> handleGenericException(Exception ex) {
+        log.error(ex.getMessage());
         return ApiResponse.of(
-            HttpStatus.BAD_REQUEST,
-            e.getBindingResult().getAllErrors().getFirst().getDefaultMessage()
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            ex.getMessage()
         );
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalAccessException.class)
     protected ApiResponse<Object> illegalArgumentException(IllegalArgumentException e) {
         return ApiResponse.of(
