@@ -51,7 +51,6 @@ public class QrCodeController {
 			request.getRemoteAddr(),
 			request.getHeader("User-Agent")
 		);
-
 		QrCode qrCode = qrCodeService.getQrCode(trackingId);
 		return ResponseEntity.status(HttpStatus.FOUND)
 			.location(URI.create(qrCode.getTargetUrl()))
