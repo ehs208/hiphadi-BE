@@ -1,11 +1,9 @@
 package hiphadi.menu.api.service.response;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import hiphadi.menu.domain.product.ProductImg;
 import hiphadi.menu.domain.product.Product;
+import hiphadi.menu.domain.menuAvailability.MenuAvailability;
 import hiphadi.menu.domain.product.ProductStatus;
 import hiphadi.menu.domain.product.RecommendStatus;
 import lombok.Getter;
@@ -15,23 +13,23 @@ public class ProductListResponse {
 	private Long id;
 	private String name;
 	private String engName;
-	private BigDecimal price;
+	private Long price;
 	private String category;
 	private String categoryEngName;
 	private ProductStatus status;
 	private RecommendStatus isRecommend;
 	private String description;
 
-	public ProductListResponse(Product product) {
-		this.id = product.getId();
-		this.name = product.getName();
-		this.engName= product.getEngName();
-		this.price = product.getPrice();
-		this.description = product.getDescription();
-		this.category = product.getCategory().getCategoryName();
-		this.categoryEngName = product.getCategory().getCategoryEngName();
-		this.status = product.getStatus();
-		this.isRecommend = product.getIsRecommend();
+	public ProductListResponse(MenuAvailability menu) {
+		this.id = menu.getId();
+		this.name = menu.getProduct().getName();
+		this.engName= menu.getProduct().getEngName();
+		this.price = menu.getPrice();
+		this.description = menu.getProduct().getDescription();
+		this.category = menu.getProduct().getCategory().getCategoryName();
+		this.categoryEngName = menu.getProduct().getCategory().getCategoryEngName();
+		this.status = menu.getProduct().getStatus();
+		this.isRecommend = menu.getProduct().getIsRecommend();
 
 	}
 }
