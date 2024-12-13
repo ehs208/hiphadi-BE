@@ -11,6 +11,7 @@ import hiphadi.menu.domain.product.Product;
 
 @Repository
 public interface MenuAvailabilityRepository extends JpaRepository<MenuAvailability, Long> {
-	@Query("SELECT m FROM MenuAvailability m JOIN m.product p JOIN p.category c WHERE m.situation = :situation ORDER BY c.priority ASC, CASE WHEN m.price IS NULL THEN 0 ELSE 1 END, m.price DESC")
+	@Query("SELECT m FROM MenuAvailability m JOIN m.product p JOIN p.category c WHERE m.situation = :situation ORDER BY c.priority ASC, CASE WHEN m.price IS NULL THEN 0 ELSE 1 END, m.price DESC, p.customOrder ASC")
 	List<MenuAvailability> findBySituationOrderByCategoryPriorityAndPrice(@Param("situation") Situation situation);
+
 }
