@@ -15,15 +15,7 @@ public class ApiControllerAdvice {
         log.error(ex.getMessage());
         return ApiResponse.of(
             HttpStatus.INTERNAL_SERVER_ERROR,
-            ex.getMessage()
-        );
-    }
-
-    @ExceptionHandler(IllegalAccessException.class)
-    protected ApiResponse<Object> illegalArgumentException(IllegalArgumentException e) {
-        return ApiResponse.of(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage()
+            "An error occurred while processing the request."
         );
     }
 }
