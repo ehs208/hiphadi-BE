@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hiphadi.menu.api.service.response.ProductDetailResponse;
 import hiphadi.menu.api.service.response.ProductListResponse;
+import hiphadi.menu.domain.currentSituation.CurrentSituation;
+import hiphadi.menu.domain.currentSituation.CurrentSituationRepository;
 import hiphadi.menu.domain.menuAvailability.MenuAvailabilityRepository;
 import hiphadi.menu.domain.menuAvailability.Situation;
 import hiphadi.menu.domain.product.ProductRepository;
@@ -19,11 +21,14 @@ import lombok.RequiredArgsConstructor;
 public class ProductServiceImpl implements ProductService {
 	private final ProductRepository productRepository;
 	private final MenuAvailabilityRepository menuAvailabilityRepository;
-
+	private final CurrentSituationRepository currentSituationRepository;
 	@Transactional(readOnly = true)
 	@Override
 	public List<ProductListResponse> getAllProducts() {
-		return menuAvailabilityRepository.findBySituationOrderByCategoryPriorityAndPrice(Situation.PARTY)
+
+		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
+
+		return menuAvailabilityRepository.findBySituationOrderByCategoryPriorityAndPrice(situation.getSituation())
 			.stream()
 			.map(ProductListResponse::new)
 			.collect(Collectors.toList());
