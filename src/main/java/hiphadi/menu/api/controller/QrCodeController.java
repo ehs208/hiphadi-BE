@@ -48,7 +48,7 @@ public class QrCodeController {
 		HttpServletRequest request) {
 		qrCodeService.recordVisit(
 			trackingId,
-			request.getRemoteAddr(),
+			request.getHeader("X-Real-IP"),
 			request.getHeader("User-Agent")
 		);
 		QrCode qrCode = qrCodeService.getQrCode(trackingId);
