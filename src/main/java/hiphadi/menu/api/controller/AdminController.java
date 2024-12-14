@@ -1,6 +1,9 @@
 package hiphadi.menu.api.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +17,13 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	@PostMapping("/login")
 	public ApiResponse<Void> login() {
-		// Spring Security가 자동으로 처리
 		return ApiResponse.ok(null);
+	}
+
+	@GetMapping("/checkLogin")
+	public ApiResponse<Boolean> checkLogin(@AuthenticationPrincipal UserDetails userDetails) {
+		boolean isAuthenticated = userDetails != null;
+		return ApiResponse.ok(isAuthenticated);
 	}
 
 }
