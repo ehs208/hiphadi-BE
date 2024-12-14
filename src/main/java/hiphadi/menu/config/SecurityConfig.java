@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +40,21 @@ public class SecurityConfig {
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.successHandler((request, response, authentication) -> {
+					HttpSession session = request.getSession();
+					String origin = request.getHeader("Origin");
+
+					Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
+					sessionCookie.setPath("/");
+					sessionCookie.setHttpOnly(true);
+					sessionCookie.setSecure(true);  // HTTPS만 허용
+					sessionCookie.setAttribute("SameSite", "None");  // 크로스 사이트 요청 허용
+
+					// hiphadi.store에서 오는 요청일 경우에만 도메인 설정
+					if (origin != null && origin.contains("hiphadi.store")) {
+						sessionCookie.setDomain(".hiphadi.store");  // 서브도메인 포함
+					}
+
+					response.addCookie(sessionCookie);
 					response.setStatus(HttpStatus.OK.value());
 				})
 				.failureHandler((request, response, exception) -> {
@@ -54,7 +71,7 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://hiphadi.store", "https://dev-api.hiphadi.store", "https://api.hiphadi.store")); // 프론트엔드 주소
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
-		configuration.setAllowCredentials(true);  // withCredentials: true 사용시 필요
+		configuration.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
