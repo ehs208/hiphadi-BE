@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hiphadi.menu.api.ApiResponse;
-import hiphadi.menu.api.service.ProductServiceImpl;
+import hiphadi.menu.api.service.ProductService;
 import hiphadi.menu.api.service.response.ProductDetailResponse;
 import hiphadi.menu.api.service.response.ProductListResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,11 +19,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class ProductController {
 
-	private final ProductServiceImpl productService;
+	private final ProductService productService;
 
 	@GetMapping("/list")
-	public ApiResponse<List<ProductListResponse>> getProductList() {
-		List<ProductListResponse> productListResponse = productService.getAllProducts();
+	public ApiResponse<List<ProductListResponse>> getProductList(HttpServletRequest request) {
+		List<ProductListResponse> productListResponse = productService.getAllProducts(
+			request.getHeader("X-Real-IP"),
+			request.getHeader("User-Agent"));
 		return ApiResponse.ok(productListResponse);
 	}
 

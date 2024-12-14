@@ -8,4 +8,5 @@ import hiphadi.menu.domain.menuAvailability.Situation;
 @Repository
 public interface CurrentSituationRepository extends JpaRepository<CurrentSituation, Long> {
 	CurrentSituation findCurrentSituationByIsActive(boolean isActive);
+	CurrentSituation findBySituation(Situation situation);
 }

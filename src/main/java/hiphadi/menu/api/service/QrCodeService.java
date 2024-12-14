@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import hiphadi.menu.api.service.request.CreateQrCodeRequest;
 import hiphadi.menu.domain.qrcode.QrCode;
 import hiphadi.menu.domain.qrcode.QrCodeRepository;
-import hiphadi.menu.domain.qrcode.VisitLog;
+import hiphadi.menu.domain.visitLog.VisitLog;
 import lombok.RequiredArgsConstructor;
 
 @Service
