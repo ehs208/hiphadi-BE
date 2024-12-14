@@ -49,11 +49,6 @@ public class SecurityConfig {
 					sessionCookie.setSecure(true);  // HTTPS만 허용
 					sessionCookie.setAttribute("SameSite", "None");  // 크로스 사이트 요청 허용
 
-					// hiphadi.store에서 오는 요청일 경우에만 도메인 설정
-					if (origin != null && origin.contains("hiphadi.store")) {
-						sessionCookie.setDomain(".hiphadi.store");  // 서브도메인 포함
-					}
-
 					response.addCookie(sessionCookie);
 					response.setStatus(HttpStatus.OK.value());
 				})
