@@ -31,7 +31,7 @@ public class SecurityConfig {
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 				.maximumSessions(1)
-				.maxSessionsPreventsLogin(true)
+				.maxSessionsPreventsLogin(false)  // false로 변경
 			)
 			.formLogin(login -> login
 				.loginProcessingUrl("/api/admin/login")
