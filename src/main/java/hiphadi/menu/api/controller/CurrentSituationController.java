@@ -1,5 +1,6 @@
 package hiphadi.menu.api.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,11 @@ public class CurrentSituationController {
 	public ApiResponse<Void> changeSituation(@PathVariable Situation situation) {
 		currentSituationService.changeSituationStatus(situation);
 		return ApiResponse.ok(null);
+	}
+
+	@GetMapping("")
+	public ApiResponse<Situation> getCurrentSituation() {
+		return ApiResponse.ok(currentSituationService.getCurrentSituation());
 	}
 
 }

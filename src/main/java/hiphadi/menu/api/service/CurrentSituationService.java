@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class CurrentSituationService {
 
-	private final CurrentSituationRepository CurrentSituationRepository;
+	private final CurrentSituationRepository currentSituationRepository;
 
 	@Transactional
 	public void changeSituationStatus(Situation situation) {
 
-		CurrentSituation normalSituation = CurrentSituationRepository.findBySituation(Situation.NORMAL);
-		CurrentSituation partySituation = CurrentSituationRepository.findBySituation(Situation.PARTY);
+		CurrentSituation normalSituation = currentSituationRepository.findBySituation(Situation.NORMAL);
+		CurrentSituation partySituation = currentSituationRepository.findBySituation(Situation.PARTY);
 
 		if(situation == Situation.NORMAL) {
 			normalSituation.changeSituationStatus(normalSituation, true);
@@ -31,6 +31,11 @@ public class CurrentSituationService {
 			partySituation.changeSituationStatus(partySituation, true);
 		}
 
+	}
+
+	public Situation getCurrentSituation() {
+		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
+		return situation.getSituation();
 	}
 
 }
