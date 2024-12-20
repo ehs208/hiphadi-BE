@@ -29,9 +29,6 @@ public class QrCode {
 	private LocalDateTime createdAt;
 	private int visits;
 
-	@OneToMany(mappedBy = "qrCode", cascade = CascadeType.ALL)
-	private List<VisitLog> visitLogs = new ArrayList<>();
-
 	@Builder
 	private QrCode(String trackingId, String targetUrl, LocalDateTime createdAt, int visits) {
 		this.trackingId = trackingId;

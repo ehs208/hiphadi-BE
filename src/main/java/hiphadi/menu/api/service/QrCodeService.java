@@ -18,12 +18,14 @@ import hiphadi.menu.api.service.request.CreateQrCodeRequest;
 import hiphadi.menu.domain.qrcode.QrCode;
 import hiphadi.menu.domain.qrcode.QrCodeRepository;
 import hiphadi.menu.domain.visitLog.VisitLog;
+import hiphadi.menu.domain.visitLog.VisitLogRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class QrCodeService {
 	private final QrCodeRepository qrCodeRepository;
+	private final VisitLogRepository visitLogRepository;
 
 	public String createQrCode(CreateQrCodeRequest request) throws IOException, WriterException {
 			// 트래킹 ID 생성
@@ -55,10 +57,10 @@ public class QrCodeService {
 
 	public void recordVisit(String trackingId, String ipAddress, String userAgent) {
 		QrCode qrCode = qrCodeRepository.findByTrackingId(trackingId);
-
 		VisitLog visitLog = VisitLog.createVisitLog(qrCode, ipAddress, userAgent);
-		qrCode.getVisitLogs().add(visitLog);
+
 		qrCode.addVisits();
+		visitLogRepository.save(visitLog);
 		qrCodeRepository.save(qrCode);
 	}
 
