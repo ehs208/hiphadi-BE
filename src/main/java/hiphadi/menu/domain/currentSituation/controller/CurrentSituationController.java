@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.global.response.ApiResponse;
+
 import hiphadi.menu.domain.currentSituation.service.CurrentSituationService;
 import hiphadi.menu.domain.menuAvailability.domain.Situation;
+import hiphadi.menu.global.response.GlobalResponseDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,14 +20,14 @@ public class CurrentSituationController {
 	private final CurrentSituationService currentSituationService;
 
 	@PatchMapping("{situation}")
-	public ApiResponse<Void> changeSituation(@PathVariable Situation situation) {
+	public GlobalResponseDto<Void> changeSituation(@PathVariable Situation situation) {
 		currentSituationService.changeSituationStatus(situation);
-		return ApiResponse.ok(null);
+		return GlobalResponseDto.success();
 	}
 
 	@GetMapping("")
-	public ApiResponse<Situation> getCurrentSituation() {
-		return ApiResponse.ok(currentSituationService.getCurrentSituation());
+	public GlobalResponseDto<Situation> getCurrentSituation() {
+		return GlobalResponseDto.success(currentSituationService.getCurrentSituation());
 	}
 
 }

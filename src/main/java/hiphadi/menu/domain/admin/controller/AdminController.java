@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.global.response.ApiResponse;
+import hiphadi.menu.global.response.GlobalResponseDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,14 +15,14 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class AdminController {
 	@PostMapping("/login")
-	public ApiResponse<Void> login() {
-		return ApiResponse.ok(null);
+	public GlobalResponseDto<Void> login() {
+		return GlobalResponseDto.success();
 	}
 
 	@GetMapping("/checkLogin")
-	public ApiResponse<Boolean> checkLogin(@AuthenticationPrincipal UserDetails userDetails) {
+	public GlobalResponseDto<Boolean> checkLogin(@AuthenticationPrincipal UserDetails userDetails) {
 		boolean isAuthenticated = userDetails != null;
-		return ApiResponse.ok(isAuthenticated);
+		return GlobalResponseDto.success(isAuthenticated);
 	}
 
 }

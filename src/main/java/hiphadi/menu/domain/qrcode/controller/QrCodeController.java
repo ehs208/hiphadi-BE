@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.zxing.WriterException;
 
-import hiphadi.menu.global.response.ApiResponse;
 import hiphadi.menu.domain.qrcode.service.QrCodeService;
 import hiphadi.menu.domain.qrcode.dto.CreateQrCodeRequest;
 import hiphadi.menu.global.config.ApiKeyConfig;
 import hiphadi.menu.domain.qrcode.domain.QrCode;
+import hiphadi.menu.global.response.GlobalResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,7 @@ public class QrCodeController {
 	private final ApiKeyConfig apiKeyConfig;
 
 	@PostMapping("")
-	public ApiResponse<String> createQrCode(@RequestBody CreateQrCodeRequest request,  @RequestHeader("X-API-KEY") String apiKey) throws
+	public GlobalResponseDto<String> createQrCode(@RequestBody CreateQrCodeRequest request,  @RequestHeader("X-API-KEY") String apiKey) throws
 		IOException,
 		WriterException {
 		if (!apiKeyConfig.isValidApiKey(apiKey)) {
@@ -39,7 +39,7 @@ public class QrCodeController {
 		}
 
 		String trackingId = qrCodeService.createQrCode(request);
-		return ApiResponse.ok(trackingId);
+		return GlobalResponseDto.success(trackingId);
 	}
 
 	@GetMapping("/redirect/{trackingId}")

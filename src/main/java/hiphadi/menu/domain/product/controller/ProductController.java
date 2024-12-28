@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.global.response.ApiResponse;
+
 import hiphadi.menu.domain.product.service.ProductService;
 import hiphadi.menu.domain.product.dto.ProductDetailResponse;
 import hiphadi.menu.domain.product.dto.ProductListResponse;
+import hiphadi.menu.global.response.GlobalResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -22,15 +23,15 @@ public class ProductController {
 	private final ProductService productService;
 
 	@GetMapping("/list")
-	public ApiResponse<List<ProductListResponse>> getProductList(HttpServletRequest request) {
+	public GlobalResponseDto<List<ProductListResponse>> getProductList(HttpServletRequest request) {
 		List<ProductListResponse> productListResponse = productService.getAllProducts(
 			request.getHeader("X-Real-IP"),
 			request.getHeader("User-Agent"));
-		return ApiResponse.ok(productListResponse);
+		return GlobalResponseDto.success(productListResponse);
 	}
 
 	@GetMapping("/detail/{id}")
-	public ApiResponse<ProductDetailResponse> getProductInfo(@PathVariable Long id) {
-		return ApiResponse.ok(productService.getProductDetail(id));
+	public GlobalResponseDto<ProductDetailResponse> getProductInfo(@PathVariable Long id) {
+		return GlobalResponseDto.success(productService.getProductDetail(id));
 	}
 }
