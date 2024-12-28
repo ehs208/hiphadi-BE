@@ -2,7 +2,7 @@ package hiphadi.menu.domain.visitLog;
 
 import java.time.LocalDateTime;
 
-import hiphadi.menu.domain.qrcode.QrCode;
+import hiphadi.menu.domain.qrcode.domain.QrCode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
