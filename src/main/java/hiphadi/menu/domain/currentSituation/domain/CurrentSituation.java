@@ -1,6 +1,6 @@
 package hiphadi.menu.domain.currentSituation.domain;
 
-import hiphadi.menu.domain.menuAvailability.domain.Situation;
+import hiphadi.menu.domain.menu.domain.Situation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

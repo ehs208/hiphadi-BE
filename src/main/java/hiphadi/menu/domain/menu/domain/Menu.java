@@ -1,4 +1,4 @@
-package hiphadi.menu.domain.menuAvailability.domain;
+package hiphadi.menu.domain.menu.domain;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MenuAvailability {
+public class Menu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -46,7 +46,7 @@ public class SecurityConfig {
 					Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
 					sessionCookie.setPath("/");
 					sessionCookie.setHttpOnly(true);
-					sessionCookie.setSecure(true);  // HTTPS만 허용
+					sessionCookie.setSecure(false);
 					sessionCookie.setAttribute("SameSite", "None");  // 크로스 사이트 요청 허용
 
 					response.addCookie(sessionCookie);

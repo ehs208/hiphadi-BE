@@ -1,12 +1,12 @@
-package hiphadi.menu.domain.product.dto;
+package hiphadi.menu.domain.menu.dto;
 
-import hiphadi.menu.domain.menuAvailability.domain.MenuAvailability;
+import hiphadi.menu.domain.menu.domain.Menu;
 import hiphadi.menu.domain.product.domain.ProductStatus;
 import hiphadi.menu.domain.product.domain.RecommendStatus;
 import lombok.Getter;
 
 @Getter
-public class ProductListResponse {
+public class MenuListResponse {
 	private Long id;
 	private String name;
 	private String engName;
@@ -17,7 +17,7 @@ public class ProductListResponse {
 	private RecommendStatus isRecommend;
 	private String description;
 
-	public ProductListResponse(MenuAvailability menu) {
+	public MenuListResponse(Menu menu) {
 		this.id = menu.getId();
 		this.name = menu.getProduct().getName();
 		this.engName= menu.getProduct().getEngName();

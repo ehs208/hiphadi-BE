@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hiphadi.menu.domain.currentSituation.domain.CurrentSituation;
 import hiphadi.menu.domain.currentSituation.domain.repository.CurrentSituationRepository;
-import hiphadi.menu.domain.menuAvailability.domain.Situation;
+import hiphadi.menu.domain.menu.domain.Situation;
 
 import lombok.RequiredArgsConstructor;
 

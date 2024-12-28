@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import hiphadi.menu.domain.product.service.ProductService;
-import hiphadi.menu.domain.product.dto.ProductDetailResponse;
-import hiphadi.menu.domain.product.dto.ProductListResponse;
+import hiphadi.menu.domain.menu.dto.MenuDetailResponse;
+import hiphadi.menu.domain.menu.dto.MenuListResponse;
 import hiphadi.menu.global.response.GlobalResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,15 +23,15 @@ public class ProductController {
 	private final ProductService productService;
 
 	@GetMapping("/list")
-	public GlobalResponseDto<List<ProductListResponse>> getProductList(HttpServletRequest request) {
-		List<ProductListResponse> productListResponse = productService.getAllProducts(
+	public GlobalResponseDto<List<MenuListResponse>> getProductList(HttpServletRequest request) {
+		List<MenuListResponse> productListResponse = productService.getAllProducts(
 			request.getHeader("X-Real-IP"),
 			request.getHeader("User-Agent"));
 		return GlobalResponseDto.success(productListResponse);
 	}
 
 	@GetMapping("/detail/{id}")
-	public GlobalResponseDto<ProductDetailResponse> getProductInfo(@PathVariable Long id) {
+	public GlobalResponseDto<MenuDetailResponse> getProductInfo(@PathVariable Long id) {
 		return GlobalResponseDto.success(productService.getProductDetail(id));
 	}
 }

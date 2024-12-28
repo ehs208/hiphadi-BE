@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import hiphadi.menu.domain.currentSituation.service.CurrentSituationService;
-import hiphadi.menu.domain.menuAvailability.domain.Situation;
+import hiphadi.menu.domain.menu.domain.Situation;
 import hiphadi.menu.global.response.GlobalResponseDto;
 import lombok.RequiredArgsConstructor;
 

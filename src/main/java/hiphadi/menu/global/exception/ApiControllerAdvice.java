@@ -18,7 +18,7 @@ public class ApiControllerAdvice {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(GlobalResponseDto.fail(
             HttpStatus.INTERNAL_SERVER_ERROR,
-            "An error occurred while processing the request."
+            ex.getMessage()
         ));
     }
 }

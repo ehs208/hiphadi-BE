@@ -1,4 +1,4 @@
-package hiphadi.menu.domain.menuAvailability.domain;
+package hiphadi.menu.domain.menu.domain;
 
 public enum Situation {
 	PARTY("파티"),
