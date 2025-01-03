@@ -35,9 +35,5 @@ public class MenuController {
 		return GlobalResponseDto.success(menuService.getMenuDetail(id));
 	}
 
-	@GetMapping("/admin/list/{situation}")
-	public GlobalResponseDto<List<MenuListResponse>> getMenuListAdmin(@PathVariable Situation situation) {
-		List<MenuListResponse> productListResponse = menuService.getAllMenusforAdmin(situation);
-		return GlobalResponseDto.success(productListResponse);
-	}
+
 }

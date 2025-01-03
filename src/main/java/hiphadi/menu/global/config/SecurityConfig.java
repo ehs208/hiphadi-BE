@@ -27,8 +27,10 @@ public class SecurityConfig {
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/situation/**").authenticated()  // situation 관련 요청만 인증 필요
-				.anyRequest().permitAll()  // 나머지는 모두 허용
+				.requestMatchers("/api/admin/login").permitAll()
+				.requestMatchers("/api/admin/checkLogin").permitAll()
+				.requestMatchers("/api/admin/**").authenticated()
+				.anyRequest().permitAll()
 			)
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

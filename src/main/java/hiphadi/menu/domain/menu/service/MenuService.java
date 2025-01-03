@@ -46,7 +46,7 @@ public class MenuService  {
 	// public void updateMenuDetail(Long id, MenuDetailResponse menuDetailResponse) {
 	// 	menuRepository.findById(id).orElseThrow().update(menuDetailResponse);
 	// }
-	//
+
 	// @Transactional
 	// public void deleteMenu(Long id) {
 	// 	menuRepository.deleteById(id);
@@ -57,9 +57,11 @@ public class MenuService  {
 	// 	menuRepository.save(menuDetailResponse.toEntity());
 	// }
 
+	//관리자 메뉴 조회
 	@Transactional
-	public List<MenuListResponse> getAllMenusforAdmin(Situation situation) {
-		return menuRepository.findBySituationOrderByCategoryPriorityAndPrice(situation)
+	public List<MenuListResponse> getAllMenusforAdmin(String situation) {
+		Situation situationEnum = Situation.valueOf(situation.toUpperCase());
+		return menuRepository.findBySituationOrderByCategoryPriorityAndPrice(situationEnum)
 			.stream()
 			.map(MenuListResponse::new)
 			.collect(Collectors.toList());
