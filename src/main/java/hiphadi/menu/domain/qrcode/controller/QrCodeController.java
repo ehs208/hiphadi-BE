@@ -44,13 +44,7 @@ public class QrCodeController {
 
 	@GetMapping("/redirect/{trackingId}")
 	public ResponseEntity<Void> redirect(
-		@PathVariable String trackingId,
-		HttpServletRequest request) {
-		qrCodeService.recordVisit(
-			trackingId,
-			request.getHeader("X-Real-IP"),
-			request.getHeader("User-Agent")
-		);
+		@PathVariable String trackingId) {
 		QrCode qrCode = qrCodeService.getQrCode(trackingId);
 		return ResponseEntity.status(HttpStatus.FOUND)
 			.location(URI.create(qrCode.getTargetUrl()))
