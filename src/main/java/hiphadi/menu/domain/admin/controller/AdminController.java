@@ -38,13 +38,13 @@ public class AdminController {
 		return GlobalResponseDto.success(isAuthenticated);
 	}
 
-	@PatchMapping("{situation}")
+	@PatchMapping("/situation/{situation}")
 	public GlobalResponseDto<Void> changeSituation(@PathVariable Situation situation) {
 		currentSituationService.changeSituationStatus(situation);
 		return GlobalResponseDto.success();
 	}
 
-	@GetMapping("")
+	@GetMapping("situation")
 	public GlobalResponseDto<Situation> getCurrentSituation() {
 		return GlobalResponseDto.success(currentSituationService.getCurrentSituation());
 	}
