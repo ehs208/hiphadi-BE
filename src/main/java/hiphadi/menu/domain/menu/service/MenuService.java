@@ -3,6 +3,9 @@ package hiphadi.menu.domain.menu.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +26,17 @@ public class MenuService  {
 	private final CurrentSituationRepository currentSituationRepository;
 	private final VisitLogRepository visitLogRepository;
 
-	@Transactional(readOnly = true)
-	public List<MenuListResponse> getAllMenus(String ipAddress, String userAgent) {
-
-		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
-
+	@Transactional
+	public void recordVisit(String ipAddress, String userAgent) {
 		VisitLog visitLog = VisitLog.createVisitLog(null, ipAddress, userAgent);
 		visitLogRepository.save(visitLog);
+	}
+
+	// 메뉴 조회만 담당하는 메서드 (캐싱됨)
+	@Transactional(readOnly = true)
+	@Cacheable(value = "MENU")
+	public List<MenuListResponse> getAllMenus() {
+		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
 
 		return menuRepository.findBySituationOrderByCategoryPriorityAndPrice(situation.getSituation())
 			.stream()
@@ -37,25 +44,18 @@ public class MenuService  {
 			.collect(Collectors.toList());
 	}
 
+
 	@Transactional(readOnly = true)
 	public MenuDetailResponse getMenuDetail(Long id) {
 		return new MenuDetailResponse(menuRepository.findById(id).orElseThrow());
 	}
 
-	// @Transactional
-	// public void updateMenuDetail(Long id, MenuDetailResponse menuDetailResponse) {
-	// 	menuRepository.findById(id).orElseThrow().update(menuDetailResponse);
-	// }
 
-	// @Transactional
-	// public void deleteMenu(Long id) {
-	// 	menuRepository.deleteById(id);
-	// }
-	//
-	// @Transactional
-	// public void createMenu(MenuDetailResponse menuDetailResponse) {
-	// 	menuRepository.save(menuDetailResponse.toEntity());
-	// }
+	@Transactional
+	public void getPopularMenus() {
+
+	}
+
 
 	//관리자 메뉴 조회
 	@Transactional
