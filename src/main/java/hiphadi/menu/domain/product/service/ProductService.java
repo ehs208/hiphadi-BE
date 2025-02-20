@@ -20,25 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class ProductService  {
-	private final ProductRepository productRepository;
+
 	private final MenuRepository menuRepository;
-	private final CurrentSituationRepository currentSituationRepository;
-	private final VisitLogRepository visitLogRepository;
-
-	@Transactional(readOnly = true)
-	public List<MenuListResponse> getAllProducts(String ipAddress, String userAgent) {
-
-		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
-
-		VisitLog visitLog = VisitLog.createVisitLog(null, ipAddress, userAgent);
-		visitLogRepository.save(visitLog);
-
-
-		return menuRepository.findBySituationOrderByCategoryPriorityAndPrice(situation.getSituation())
-			.stream()
-			.map(MenuListResponse::new)
-			.collect(Collectors.toList());
-	}
 
 	@Transactional(readOnly = true)
 	public MenuDetailResponse getProductDetail(Long id) {

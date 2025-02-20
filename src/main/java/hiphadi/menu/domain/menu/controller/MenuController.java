@@ -2,12 +2,12 @@ package hiphadi.menu.domain.menu.controller;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiphadi.menu.domain.menu.domain.Situation;
 import hiphadi.menu.domain.menu.dto.MenuDetailResponse;
 import hiphadi.menu.domain.menu.dto.MenuListResponse;
 import hiphadi.menu.domain.menu.service.MenuService;
@@ -24,9 +24,11 @@ public class MenuController {
 
 	@GetMapping("/list")
 	public GlobalResponseDto<List<MenuListResponse>> getMenuList(HttpServletRequest request) {
-		List<MenuListResponse> productListResponse = menuService.getAllMenus(
+		menuService.recordVisit(
 			request.getHeader("X-Real-IP"),
 			request.getHeader("User-Agent"));
+		List<MenuListResponse> productListResponse = menuService.getAllMenus();
+
 		return GlobalResponseDto.success(productListResponse);
 	}
 

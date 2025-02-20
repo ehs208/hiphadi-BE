@@ -22,14 +22,6 @@ public class ProductController {
 
 	private final ProductService productService;
 
-	@GetMapping("/list")
-	public GlobalResponseDto<List<MenuListResponse>> getProductList(HttpServletRequest request) {
-		List<MenuListResponse> productListResponse = productService.getAllProducts(
-			request.getHeader("X-Real-IP"),
-			request.getHeader("User-Agent"));
-		return GlobalResponseDto.success(productListResponse);
-	}
-
 	@GetMapping("/detail/{id}")
 	public GlobalResponseDto<MenuDetailResponse> getProductInfo(@PathVariable Long id) {
 		return GlobalResponseDto.success(productService.getProductDetail(id));
