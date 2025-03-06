@@ -1,5 +1,6 @@
 package hiphadi.menu.domain.currentSituation.service;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ public class CurrentSituationService {
 	private final CurrentSituationRepository currentSituationRepository;
 
 	@Transactional
+	@CacheEvict(value = "MENU")
 	public void changeSituationStatus(Situation situation) {
 
 		CurrentSituation normalSituation = currentSituationRepository.findBySituation(Situation.NORMAL);
