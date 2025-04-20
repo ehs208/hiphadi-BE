@@ -51,6 +51,9 @@ dependencies {
     implementation 'com.google.zxing:core:3.5.3'
     implementation 'com.google.zxing:javase:3.5.1'
 
+    // GA4
+    implementation 'com.google.analytics:google-analytics-data:0.71.0'
+
 }
 
 tasks.named('test') {
