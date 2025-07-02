@@ -34,7 +34,7 @@ public class MenuService  {
 
 	// 메뉴 조회만 담당하는 메서드 (캐싱됨)
 	@Transactional(readOnly = true)
-	@CacheEvict(value = "MENU", allEntries = true)
+	@Cacheable(value = "MENU")
 	public List<MenuListResponse> getAllMenus() {
 		CurrentSituation situation = currentSituationRepository.findCurrentSituationByIsActive(true);
 
