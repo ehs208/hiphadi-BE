@@ -15,6 +15,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 	@Query("SELECT m FROM Menu m JOIN FETCH m.product p JOIN FETCH p.category c " +
 		"WHERE m.situation = :situation " +
 		"ORDER BY c.priority ASC, CASE WHEN m.price IS NULL THEN 0 ELSE 1 END, " +
-		"m.price DESC, p.customOrder ASC")
+		"CASE WHEN c.id = 23 THEN m.price ELSE -m.price END ASC, " +
+		"p.customOrder ASC")
 	List<Menu> findBySituationOrderByCategoryPriorityAndPrice(@Param("situation") Situation situation);
 }
