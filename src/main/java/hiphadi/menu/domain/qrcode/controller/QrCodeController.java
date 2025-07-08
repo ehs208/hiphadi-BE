@@ -20,7 +20,6 @@ import hiphadi.menu.domain.qrcode.dto.CreateQrCodeRequest;
 import hiphadi.menu.global.config.ApiKeyConfig;
 import hiphadi.menu.domain.qrcode.domain.QrCode;
 import hiphadi.menu.global.response.GlobalResponseDto;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,7 +34,7 @@ public class QrCodeController {
 		IOException,
 		WriterException {
 		if (!apiKeyConfig.isValidApiKey(apiKey)) {
-			throw new RuntimeException("Invalid API Key");
+			throw new IllegalArgumentException("유효하지 않은 API 키입니다.");
 		}
 
 		String trackingId = qrCodeService.createQrCode(request);
@@ -51,9 +50,4 @@ public class QrCodeController {
 			.build();
 	}
 
-	// @GetMapping("/stats/{trackingId}")
-	// public ResponseEntity<QrCodeStats> getStats(@PathVariable String trackingId) {
-	// 	QrCodeStats stats = qrCodeService.getStats(trackingId);
-	// 	return ResponseEntity.ok(stats);
-	// }
 }
