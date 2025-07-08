@@ -2,7 +2,6 @@ package hiphadi.menu.domain.menu.controller;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +23,13 @@ public class MenuController {
 
 	@GetMapping("/list")
 	public GlobalResponseDto<List<MenuListResponse>> getMenuList(HttpServletRequest request) {
-		menuService.recordVisit(
-			request.getHeader("X-Real-IP"),
-			request.getHeader("User-Agent"));
-		List<MenuListResponse> productListResponse = menuService.getAllMenus();
+		String ipAddress = getClientIpAddress(request);
+		String userAgent = request.getHeader("User-Agent");
+		
+		menuService.recordVisit(ipAddress, userAgent);
+		List<MenuListResponse> menuListResponse = menuService.getAllMenus();
 
-		return GlobalResponseDto.success(productListResponse);
+		return GlobalResponseDto.success(menuListResponse);
 	}
 
 	@GetMapping("/detail/{id}")
@@ -37,5 +37,17 @@ public class MenuController {
 		return GlobalResponseDto.success(menuService.getMenuDetail(id));
 	}
 
-
+	private String getClientIpAddress(HttpServletRequest request) {
+		String xRealIp = request.getHeader("X-Real-IP");
+		if (xRealIp != null && !xRealIp.isEmpty()) {
+			return xRealIp;
+		}
+		
+		String xForwardedFor = request.getHeader("X-Forwarded-For");
+		if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
+			return xForwardedFor.split(",")[0].trim();
+		}
+		
+		return request.getRemoteAddr();
+	}
 }
