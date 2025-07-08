@@ -55,25 +55,6 @@ public class QrCodeService {
 			return trackingId;
 	}
 
-	// public void recordVisit(String trackingId, String ipAddress, String userAgent) {
-	// 	QrCode qrCode = qrCodeRepository.findByTrackingId(trackingId);
-	// 	VisitLog visitLog = VisitLog.createVisitLog(qrCode, ipAddress, userAgent);
-	//
-	// 	qrCode.addVisits();
-	// 	visitLogRepository.save(visitLog);
-	// 	qrCodeRepository.save(qrCode);
-	// }
-
-	// public QrCodeStats getStats(String trackingId) {
-	// 	QrCode qrCode = qrCodeRepository.findByTrackingId(trackingId);
-	//
-	// 	return QrCodeStats.builder()
-	// 		.totalVisits(qrCode.getVisits())
-	// 		.createdAt(qrCode.getCreatedAt())
-	// 		.targetUrl(qrCode.getTargetUrl())
-	// 		.hourlyStats(calculateHourlyStats(qrCode.getVisitLogs()))
-	// 		.build();
-	// }
 
 	public QrCode getQrCode(String trackingId) {
 		return qrCodeRepository.findByTrackingId(trackingId);

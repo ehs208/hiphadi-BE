@@ -3,8 +3,6 @@ package hiphadi.menu.domain.menu.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,19 +45,16 @@ public class MenuService  {
 
 	@Transactional(readOnly = true)
 	public MenuDetailResponse getMenuDetail(Long id) {
-		return new MenuDetailResponse(menuRepository.findById(id).orElseThrow());
+		return new MenuDetailResponse(menuRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 메뉴를 찾을 수 없습니다. ID: " + id)));
 	}
 
 
-	@Transactional
-	public void getPopularMenus() {
-
-	}
 
 
 	//관리자 메뉴 조회
 	@Transactional
-	public List<MenuListResponse> getAllMenusforAdmin(String situation) {
+	public List<MenuListResponse> getAllMenusForAdmin(String situation) {
 		Situation situationEnum = Situation.valueOf(situation.toUpperCase());
 		return menuRepository.findBySituationOrderByCategoryPriorityAndPrice(situationEnum)
 			.stream()
