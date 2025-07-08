@@ -18,7 +18,7 @@ public class CurrentSituationService {
 	private final CurrentSituationRepository currentSituationRepository;
 
 	@Transactional
-	@CacheEvict(value = "MENU")
+	@CacheEvict(value = "MENU", allEntries = true)
 	public void changeSituationStatus(Situation situation) {
 
 		CurrentSituation normalSituation = currentSituationRepository.findBySituation(Situation.NORMAL);
