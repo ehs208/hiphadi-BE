@@ -49,14 +49,14 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hiphadi:${{ github.sha }} .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/hiphadi:${{ github.sha }}
 
-      - name: Deploy to EC2
+      - name: Deploy to Oracle
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ubuntu
+          key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
-            cd /home/ec2-user/app
+            cd /home/ubuntu
             
             # Docker Hub 로그인
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
