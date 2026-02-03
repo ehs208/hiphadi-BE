@@ -1,9 +1,8 @@
-FROM openjdk:21-slim
-
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-
-# JAR 파일 복사
 COPY build/libs/*.jar app.jar
 
-# 컨테이너 실행 시 실행할 명령어
-ENTRYPOINT ["java", "-jar", "app.jar"]
+RUN mkdir -p /var/www/hiphadi/images
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "app.jar"]

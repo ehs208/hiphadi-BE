@@ -1,30 +1,32 @@
-package hiphadi.menu.domain.admin.domain;
+package hiphadi.menu.domain.suggestion.domain;
 
 import hiphadi.menu.domain.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Admin extends BaseEntity {
+@Entity
+public class Suggestion extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String username;
-	private String password;
+	@NotBlank
+	@Column(columnDefinition = "TEXT")
+	private String content;
 
-	public static Admin create(String username, String password) {
-		Admin admin = new Admin();
-		admin.username = username;
-		admin.password = password;
-		return admin;
+	@Builder
+	public Suggestion(String content) {
+		this.content = content;
 	}
 }
