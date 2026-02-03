@@ -51,6 +51,8 @@ jobs:
             cd /home/${{ secrets.OCI_USER }}/hiphadi
             export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            docker compose up -d mysql
+            sleep 10
             docker compose pull backend
             docker compose up -d backend
         env:
