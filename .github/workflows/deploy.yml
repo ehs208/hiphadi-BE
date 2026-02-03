@@ -3,7 +3,7 @@ name: Deploy Backend to OCI
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -46,7 +46,13 @@ jobs:
           host: ${{ secrets.OCI_HOST }}
           username: ${{ secrets.OCI_USER }}
           key: ${{ secrets.OCI_SSH_KEY }}
+          envs: DOCKERHUB_USERNAME,DB_PASSWORD
           script: |
             cd /home/${{ secrets.OCI_USER }}/hiphadi
+            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             docker compose pull backend
             docker compose up -d backend
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
