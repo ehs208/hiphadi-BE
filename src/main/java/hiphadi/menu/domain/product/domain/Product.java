@@ -35,7 +35,9 @@ public class Product extends BaseEntity {
 
 	private String description;
 
-	private Long price;
+	private Long singlePrice;
+
+	private Long bottlePrice;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
@@ -52,23 +54,26 @@ public class Product extends BaseEntity {
 	private ImageFile image;
 
 	@Builder
-	public Product(String name, String engName, String description, Long price,
-				   Category category, Long customOrder) {
+	public Product(String name, String engName, String description, Long singlePrice,
+				   Long bottlePrice, Category category, Long customOrder) {
 		this.name = name;
 		this.engName = engName;
 		this.description = description;
-		this.price = price;
+		this.singlePrice = singlePrice;
+		this.bottlePrice = bottlePrice;
 		this.category = category;
 		this.customOrder = customOrder;
 		this.status = ProductStatus.SALE;
 		this.isRecommend = RecommendStatus.NORMAL;
 	}
 
-	public void updateInfo(String name, String engName, String description, Long price, Category category) {
+	public void updateInfo(String name, String engName, String description, Long singlePrice,
+						   Long bottlePrice, Category category) {
 		this.name = name;
 		this.engName = engName;
 		this.description = description;
-		this.price = price;
+		this.singlePrice = singlePrice;
+		this.bottlePrice = bottlePrice;
 		this.category = category;
 	}
 

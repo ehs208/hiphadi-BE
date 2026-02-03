@@ -10,8 +10,8 @@ public class CreateProductRequest {
 	private String name;
 	private String engName;
 	private String description;
-	@NotNull
-	private Long price;
+	private Long singlePrice;
+	private Long bottlePrice;
 	@NotNull
 	private Long categoryId;
 	private String imageUrl;

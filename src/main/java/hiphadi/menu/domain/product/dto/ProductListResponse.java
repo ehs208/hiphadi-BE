@@ -10,7 +10,8 @@ public class ProductListResponse {
 	private Long id;
 	private String name;
 	private String engName;
-	private Long price;
+	private Long singlePrice;
+	private Long bottlePrice;
 	private String category;
 	private String categoryEngName;
 	private Long categoryId;
@@ -22,7 +23,8 @@ public class ProductListResponse {
 		this.id = product.getId();
 		this.name = product.getName();
 		this.engName = product.getEngName();
-		this.price = product.getPrice();
+		this.singlePrice = product.getSinglePrice();
+		this.bottlePrice = product.getBottlePrice();
 		this.description = product.getDescription();
 		this.category = product.getCategory().getCategoryName();
 		this.categoryEngName = product.getCategory().getCategoryEngName();

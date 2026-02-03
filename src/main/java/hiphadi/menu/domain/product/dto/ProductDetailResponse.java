@@ -11,7 +11,8 @@ public class ProductDetailResponse {
 	private String name;
 	private String engName;
 	private String description;
-	private Long price;
+	private Long singlePrice;
+	private Long bottlePrice;
 	private Long categoryId;
 	private String category;
 	private ProductStatus status;
@@ -23,7 +24,8 @@ public class ProductDetailResponse {
 		this.name = product.getName();
 		this.engName = product.getEngName();
 		this.description = product.getDescription();
-		this.price = product.getPrice();
+		this.singlePrice = product.getSinglePrice();
+		this.bottlePrice = product.getBottlePrice();
 		this.categoryId = product.getCategory().getId();
 		this.category = product.getCategory().getCategoryName();
 		this.status = product.getStatus();

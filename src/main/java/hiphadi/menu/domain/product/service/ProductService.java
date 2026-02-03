@@ -52,6 +52,11 @@ public class ProductService {
 	@Transactional
 	@CacheEvict(value = "MENU", allEntries = true)
 	public ProductDetailResponse createProduct(CreateProductRequest request) {
+		// 가격 유효성 검증: 싱글 또는 바틀 중 최소 하나는 필수
+		if (request.getSinglePrice() == null && request.getBottlePrice() == null) {
+			throw new CustomException(ErrorCode.INVALID_INPUT);
+		}
+
 		Category category = categoryRepository.findById(request.getCategoryId())
 			.orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
 
@@ -59,7 +64,8 @@ public class ProductService {
 			.name(request.getName())
 			.engName(request.getEngName())
 			.description(request.getDescription())
-			.price(request.getPrice())
+			.singlePrice(request.getSinglePrice())
+			.bottlePrice(request.getBottlePrice())
 			.category(category)
 			.build();
 
@@ -86,11 +92,22 @@ public class ProductService {
 				.orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
 		}
 
+		// 가격 결정: 요청에 명시된 값 사용 (null도 허용하되, 둘 다 null이면 기존 값 유지)
+		Long newSinglePrice = request.getSinglePrice();
+		Long newBottlePrice = request.getBottlePrice();
+
+		// 둘 다 명시적으로 전달되지 않은 경우 기존 값 유지
+		if (newSinglePrice == null && newBottlePrice == null) {
+			newSinglePrice = product.getSinglePrice();
+			newBottlePrice = product.getBottlePrice();
+		}
+
 		product.updateInfo(
 			request.getName() != null ? request.getName() : product.getName(),
 			request.getEngName() != null ? request.getEngName() : product.getEngName(),
 			request.getDescription() != null ? request.getDescription() : product.getDescription(),
-			request.getPrice() != null ? request.getPrice() : product.getPrice(),
+			newSinglePrice,
+			newBottlePrice,
 			category
 		);
 
