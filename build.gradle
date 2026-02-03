@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'hiphadi'
-version = '0.0.1-SNAPSHOT'
+version = '2.0.0'
 
 java {
     toolchain {
@@ -44,15 +44,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    //MariaDB
-    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    // MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
-    //QR Code
-    implementation 'com.google.zxing:core:3.5.3'
-    implementation 'com.google.zxing:javase:3.5.1'
-
-    // GA4
-    implementation 'com.google.analytics:google-analytics-data:0.71.0'
 
 }
 

@@ -32,7 +32,7 @@ public class SecurityConfig {
 			)
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-				.maximumSessions(1)
+				.maximumSessions(5)
 				.maxSessionsPreventsLogin(false)  // false로 변경
 			)
 			.formLogin(login -> login
@@ -46,7 +46,7 @@ public class SecurityConfig {
 					Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
 					sessionCookie.setPath("/");
 					sessionCookie.setHttpOnly(true);
-					sessionCookie.setSecure(false);
+					sessionCookie.setSecure(true);
 					sessionCookie.setAttribute("SameSite", "None");  // 크로스 사이트 요청 허용
 
 					response.addCookie(sessionCookie);
@@ -63,8 +63,8 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://hiphadi.store", "https://dev.hiphadi.store", "https://dev-api.hiphadi.store", "https://api.hiphadi.store")); // 프론트엔드 주소
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://hiphadi.store")); // 프론트엔드 주소
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowCredentials(true);
 

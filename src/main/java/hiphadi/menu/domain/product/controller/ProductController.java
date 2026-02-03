@@ -7,23 +7,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import hiphadi.menu.domain.product.dto.ProductDetailResponse;
+import hiphadi.menu.domain.product.dto.ProductListResponse;
 import hiphadi.menu.domain.product.service.ProductService;
-import hiphadi.menu.domain.menu.dto.MenuDetailResponse;
-import hiphadi.menu.domain.menu.dto.MenuListResponse;
+import hiphadi.menu.domain.statistics.service.StatisticsService;
 import hiphadi.menu.global.response.GlobalResponseDto;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/product")
+@RequestMapping("/api/products")
 @RestController
 public class ProductController {
 
 	private final ProductService productService;
+	private final StatisticsService statisticsService;
 
-	@GetMapping("/detail/{id}")
-	public GlobalResponseDto<MenuDetailResponse> getProductInfo(@PathVariable Long id) {
+	@GetMapping
+	public GlobalResponseDto<List<ProductListResponse>> getProducts() {
+		return GlobalResponseDto.success(productService.getAllProducts());
+	}
+
+	@GetMapping("/{id}")
+	public GlobalResponseDto<ProductDetailResponse> getProductDetail(@PathVariable Long id) {
+		statisticsService.recordProductClick(id);
 		return GlobalResponseDto.success(productService.getProductDetail(id));
 	}
 }

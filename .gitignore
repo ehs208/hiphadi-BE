@@ -37,5 +37,17 @@ out/
 ### VS Code ###
 .vscode/
 
-### Resources
-/src/main/resources/*.yaml
+### macOS ###
+.DS_Store
+
+### Resources (환경별 설정 — 민감정보 포함)
+/src/main/resources/application-local.yaml
+/src/main/resources/application-prod.yaml
+
+### Local upload directory
+uploads/
+
+### Misc
+qrcodes/
+*.log
+logs/

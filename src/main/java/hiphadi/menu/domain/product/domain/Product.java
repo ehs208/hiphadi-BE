@@ -1,8 +1,7 @@
 package hiphadi.menu.domain.product.domain;
 
-import java.util.List;
-
 import hiphadi.menu.domain.BaseEntity;
+import hiphadi.menu.domain.image.domain.ImageFile;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,9 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +35,8 @@ public class Product extends BaseEntity {
 
 	private String description;
 
+	private Long price;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -46,8 +47,44 @@ public class Product extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private RecommendStatus isRecommend;
 
-	@OneToMany
-	@JoinColumn(name = "product_id")
-	private List<ProductImg> productImage;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "image_file_id")
+	private ImageFile image;
 
+	@Builder
+	public Product(String name, String engName, String description, Long price,
+				   Category category, Long customOrder) {
+		this.name = name;
+		this.engName = engName;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.customOrder = customOrder;
+		this.status = ProductStatus.SALE;
+		this.isRecommend = RecommendStatus.NORMAL;
+	}
+
+	public void updateInfo(String name, String engName, String description, Long price, Category category) {
+		this.name = name;
+		this.engName = engName;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+	}
+
+	public void toggleStatus() {
+		this.status = (this.status == ProductStatus.SALE) ? ProductStatus.SOLD_OUT : ProductStatus.SALE;
+	}
+
+	public void toggleRecommend() {
+		this.isRecommend = (this.isRecommend == RecommendStatus.RECOMMEND) ? RecommendStatus.NORMAL : RecommendStatus.RECOMMEND;
+	}
+
+	public void updateCustomOrder(Long customOrder) {
+		this.customOrder = customOrder;
+	}
+
+	public void updateImage(ImageFile image) {
+		this.image = image;
+	}
 }
