@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hiphadi-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: menu
+      TZ: Asia/Seoul
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  backend:
+    image: ${DOCKERHUB_USERNAME}/hiphadi-backend:latest
+    container_name: hiphadi-backend
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      TZ: Asia/Seoul
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - /var/www/hiphadi/images:/var/www/hiphadi/images
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:
