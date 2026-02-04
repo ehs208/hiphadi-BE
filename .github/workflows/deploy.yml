@@ -22,9 +22,11 @@ jobs:
         run: chmod +x gradlew
 
       - name: Create application.yaml
+        env:
+          APPLICATION_YAML: ${{ secrets.APPLICATION }}
         run: |
           mkdir -p src/main/resources
-          echo "${{ secrets.APPLICATION }}" > src/main/resources/application.yaml
+          echo "$APPLICATION_YAML" > src/main/resources/application.yaml
 
       - name: Build with Gradle
         run: ./gradlew build -x test
