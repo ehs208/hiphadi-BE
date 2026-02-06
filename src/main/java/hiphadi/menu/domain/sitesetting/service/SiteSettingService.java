@@ -3,6 +3,8 @@ package hiphadi.menu.domain.sitesetting.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,7 @@ public class SiteSettingService {
 
 	private final SiteSettingRepository siteSettingRepository;
 
+	@Cacheable(value = "SITE_SETTINGS")
 	@Transactional(readOnly = true)
 	public List<SiteSettingResponse> getAllSettings() {
 		return siteSettingRepository.findAll()
@@ -26,6 +29,7 @@ public class SiteSettingService {
 			.collect(Collectors.toList());
 	}
 
+	@CacheEvict(value = "SITE_SETTINGS", allEntries = true)
 	@Transactional
 	public List<SiteSettingResponse> updateSettings(UpdateSiteSettingsRequest request) {
 		request.getSettings().forEach((key, value) -> {
