@@ -13,6 +13,7 @@ import hiphadi.menu.domain.image.domain.ImageFile;
 import hiphadi.menu.domain.image.domain.ImageType;
 import hiphadi.menu.domain.image.domain.repository.ImageFileRepository;
 import hiphadi.menu.domain.image.dto.ImageFileResponse;
+import hiphadi.menu.domain.product.domain.repository.ProductRepository;
 import hiphadi.menu.global.exception.CustomException;
 import hiphadi.menu.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ImageLibraryService {
 
 	private final ImageFileRepository imageFileRepository;
 	private final ImageService imageService;
+	private final ProductRepository productRepository;
 
 	@Transactional
 	public ImageFileResponse uploadToLibrary(MultipartFile file, ImageType imageType) {
@@ -52,8 +54,14 @@ public class ImageLibraryService {
 		final ImageFile imageFile = imageFileRepository.findById(id)
 			.orElseThrow(() -> new CustomException(ErrorCode.IMAGE_NOT_FOUND));
 
-		imageService.deleteImageFile(imageFile.getUrl());
+		if (productRepository.existsByImageId(id)) {
+			throw new CustomException(ErrorCode.IMAGE_IN_USE);
+		}
+
+		final String url = imageFile.getUrl();
 		imageFileRepository.delete(imageFile);
+		imageFileRepository.flush();
+		imageService.deleteImageFile(url);
 	}
 
 	@Transactional(readOnly = true)

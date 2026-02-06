@@ -25,6 +25,7 @@ public enum ErrorCode {
 	// Image
 	FILE_TOO_LARGE(HttpStatus.BAD_REQUEST, "파일 크기가 10MB를 초과합니다."),
 	IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 이미지를 찾을 수 없습니다."),
+	IMAGE_IN_USE(HttpStatus.CONFLICT, "사용 중인 이미지는 삭제할 수 없습니다."),
 	IMAGE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다. 잠시 후 다시 시도해주세요."),
 	FILE_EMPTY(HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),
 	INVALID_FILE_EXTENSION(HttpStatus.BAD_REQUEST, "허용되지 않는 파일 형식입니다."),
