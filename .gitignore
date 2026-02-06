@@ -51,3 +51,7 @@ uploads/
 qrcodes/
 *.log
 logs/
+
+### Claude
+CLAUDE.md
+src/test/java/hiphadi/menu/PasswordEncoderTest.java
